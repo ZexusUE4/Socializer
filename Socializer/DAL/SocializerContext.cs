@@ -16,6 +16,7 @@ namespace Socializer.DAL
         public DbSet<Like> Likes { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Town> Towns { get; set; }
 
         public SocializerContext()
             : base("SocializerContext", throwIfV1Schema: false)
@@ -29,6 +30,9 @@ namespace Socializer.DAL
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            //Many to many with users
+            modelBuilder.Entity<SUser>().HasMany<SUser>(m => m.Friends).WithMany();
         }
 
         public static SocializerContext Create()

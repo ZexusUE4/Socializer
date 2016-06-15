@@ -1,6 +1,8 @@
 namespace Socializer.Migrations
 {
+    using Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -15,18 +17,19 @@ namespace Socializer.Migrations
 
         protected override void Seed(Socializer.DAL.SocializerContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            List<string> Towns = new List<string>()
+            {
+                "Cairo", "Alexandria", "Tanta", "Luxor", "Washington", "Sharm El Sheikh"
+            };
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            Towns.ForEach(t =>
+            {
+                Town town = new Town()
+                {
+                    Name = t
+                };
+                context.Towns.AddOrUpdate(town);
+            });
         }
     }
 }

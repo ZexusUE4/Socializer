@@ -147,11 +147,35 @@ namespace Socializer.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
-                var user = new SUser { UserName = model.Email, Email = model.Email };
+                var user = new SUser
+                {
+                    UserName = model.Username,
+                    Email = model.Email,
+                    AboutMe = model.AboutMe,
+                    BirthDate = model.BirthDate,
+                    Gender = model.Gender,
+                    MaritalStatus = model.MaritalStatus,
+                    PhoneNumber = model.PhoneNumber,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    HomeTownID = model.HomeTownID,
+                };
+
+                if (file != null)
+                {
+                    var path = Server.MapPath("/Images/ProfilePics/") + user.Id + ".jpg";
+                    file.SaveAs(path);
+                    user.ProfilePicURL = "/Images/ProfilePics/" + user.Id + ".jpg";
+                }
+                else
+                {
+                    //Default PP
+                }
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

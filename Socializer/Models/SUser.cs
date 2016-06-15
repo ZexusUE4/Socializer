@@ -15,7 +15,7 @@ namespace Socializer.Models
 
     }
 
-    public enum MaritalStatus
+    public enum MaritalStatuses
     {
         Single,
         Engadged,
@@ -25,14 +25,22 @@ namespace Socializer.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class SUser : IdentityUser
     {
+        public SUser()
+        {
+            Friends = new HashSet<SUser>();
+        }
+
+        public int? HomeTownID { get; set; }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Genders Gender { get; set; }
+        public MaritalStatuses? MaritalStatus { get; set; }
         public DateTime? BirthDate { get; set; }
         public string ProfilePicURL { get; set; }
-        public string HomeTown { get; set; }
         public string AboutMe { get; set; }
 
+        public virtual Town HomeTown { get; set; }
         public virtual ICollection<SUser> Friends { get; set; }
 
 
