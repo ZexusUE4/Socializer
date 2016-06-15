@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Socializer.Models
 {
@@ -35,14 +36,22 @@ namespace Socializer.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Genders Gender { get; set; }
+        [Display(Name ="Marital Status")]
         public MaritalStatuses? MaritalStatus { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true, NullDisplayText = "No date of birth")]
         public DateTime? BirthDate { get; set; }
         public string ProfilePicURL { get; set; }
         public string AboutMe { get; set; }
 
+        [Display(Name="Home Town")]
         public virtual Town HomeTown { get; set; }
         public virtual ICollection<SUser> Friends { get; set; }
 
+        public string FullName { get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<SUser> manager)
         {

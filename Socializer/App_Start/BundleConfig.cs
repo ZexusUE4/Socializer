@@ -8,6 +8,13 @@ namespace Socializer
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            //CSS style
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                        "~/Content/bootstrap.min.css",
+                        "~/Content/animate.css",
+                        "~/Content/style.css",
+                         "~/Content/site.css"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery.min.js"));
 
@@ -22,10 +29,6 @@ namespace Socializer
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
 
             // dataPicker styles
             bundles.Add(new StyleBundle("~/plugins/dataPickerStyles").Include(
