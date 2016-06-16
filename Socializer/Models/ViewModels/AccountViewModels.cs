@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Socializer.Models
+namespace Socializer.Models.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {

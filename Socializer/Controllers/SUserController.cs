@@ -30,5 +30,50 @@ namespace Socializer.Controllers
 
             return View(pvm);
         }
+
+        public ActionResult Edit()
+        {
+            SUser currentLogged = db.Users.Find(User.Identity.GetUserId());
+            RegisterViewModel rvm = new RegisterViewModel()
+            {
+                AboutMe = currentLogged.AboutMe,
+                BirthDate = (DateTime)currentLogged.BirthDate,
+                Email = currentLogged.Email,
+                FirstName = currentLogged.FirstName,
+                LastName = currentLogged.LastName,
+                HomeTownID = (int)currentLogged.HomeTownID,
+                Gender = currentLogged.Gender,
+                MaritalStatus = currentLogged.MaritalStatus,
+                PhoneNumber = currentLogged.PhoneNumber
+            };
+
+            return View(rvm);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(RegisterViewModel rvm, HttpPostedFileBase file)
+        {
+            SUser currentLogged = db.Users.Find(User.Identity.GetUserId());
+            currentLogged.AboutMe = rvm.AboutMe;
+            currentLogged.BirthDate = rvm.BirthDate;
+            currentLogged.Email = rvm.Email;
+            currentLogged.FirstName = rvm.FirstName;
+            currentLogged.Gender = rvm.Gender;
+            currentLogged.HomeTownID = rvm.HomeTownID;
+            currentLogged.LastName = rvm.LastName;
+            currentLogged.MaritalStatus = rvm.MaritalStatus;
+            currentLogged.PhoneNumber = rvm.PhoneNumber;
+
+            if (file != null)
+            {
+                var path = Server.MapPath("/Images/ProfilePics/") + currentLogged.Id + ".jpg";
+                file.SaveAs(path);
+                currentLogged.ProfilePicURL = "/Images/ProfilePics/" + currentLogged.Id + ".jpg";
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Socializer.Models;
+using Socializer.Models.ViewModels;
 
 namespace Socializer.Controllers
 {

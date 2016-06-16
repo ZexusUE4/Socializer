@@ -94,6 +94,12 @@
                                         <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> Send Email </button>
                                     </div>
                                 }
+                                else
+                                {
+                                    <div class="col-md-6">
+                                        <button id="Edit" type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> Edit Profile </button>
+                                    </div>
+                                }
                                 @if (!Model.IsFriend && !Model.IsLoggedUser)
                                 {
                                     <div class="col-md-6">
@@ -259,4 +265,14 @@
     </div>
 </div>
 
+@section Scripts {
+    <script type="text/javascript">
 
+        $(document).ready(function () {
+            $('#Edit').click(function () {
+                window.location = "@Url.Action("Edit", "SUser")"
+            });
+        });
+
+    </script>
+}
