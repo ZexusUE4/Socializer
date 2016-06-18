@@ -80,12 +80,24 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -195,21 +207,29 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FriendRequestAPIController.cs" />
+    <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\SUserController.cs" />
     <Compile Include="DAL\SocializerContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606150908025_init.cs" />
-    <Compile Include="Migrations\201606150908025_init.Designer.cs">
-      <DependentUpon>201606150908025_init.cs</DependentUpon>
+    <Compile Include="Migrations\201606181543277_init.cs" />
+    <Compile Include="Migrations\201606181543277_init.Designer.cs">
+      <DependentUpon>201606181543277_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606151020536_Adding_MaritalStatuses.cs" />
-    <Compile Include="Migrations\201606151020536_Adding_MaritalStatuses.Designer.cs">
-      <DependentUpon>201606151020536_Adding_MaritalStatuses.cs</DependentUpon>
+    <Compile Include="Migrations\201606181550401_string.cs" />
+    <Compile Include="Migrations\201606181550401_string.Designer.cs">
+      <DependentUpon>201606181550401_string.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606181551569_ssest.cs" />
+    <Compile Include="Migrations\201606181551569_ssest.Designer.cs">
+      <DependentUpon>201606181551569_ssest.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\FriendRequest.cs" />
@@ -219,6 +239,7 @@
     <Compile Include="Models\Town.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\SUser.cs" />
+    <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\ProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\SelectListViewModel.cs" />
@@ -236,6 +257,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ProfilePics\3d73ad4a-b550-4633-a00e-58a3130a4aa1.jpg" />
+    <Content Include="Images\ProfilePics\6f3c2e09-b06e-4933-ab25-b0bfb2f8f4c3.jpg" />
+    <Content Include="Images\ProfilePics\8fea7087-dd82-4336-b033-feae254794d4.jpg" />
+    <Content Include="Images\ProfilePics\e791c066-5397-4e20-8076-7f9d705f0c0f.jpg" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -297,9 +322,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\SUser\ShowProfile.cshtml" />
     <Content Include="Views\SUser\Edit.cshtml" />
+    <Content Include="Views\Shared\_TopNavbar.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Friend\FriendList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -310,11 +339,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606150908025_init.resx">
-      <DependentUpon>201606150908025_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606181543277_init.resx">
+      <DependentUpon>201606181543277_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606151020536_Adding_MaritalStatuses.resx">
-      <DependentUpon>201606151020536_Adding_MaritalStatuses.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606181550401_string.resx">
+      <DependentUpon>201606181550401_string.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606181551569_ssest.resx">
+      <DependentUpon>201606181551569_ssest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

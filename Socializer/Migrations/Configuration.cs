@@ -12,22 +12,20 @@ namespace Socializer.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Socializer.DAL.SocializerContext";
         }
 
         protected override void Seed(Socializer.DAL.SocializerContext context)
         {
-            List<string> Towns = new List<string>()
+            return;
+            List<string> HomeTowns = new List<string>()
             {
-                "Cairo", "Alexandria", "Tanta", "Luxor", "Washington", "Sharm El Sheikh"
+                "Cairo","Alexandria","Tanta","Luxor","Sharm El Sheikh","Hurghada", "Damanhour",
             };
 
-            Towns.ForEach(t =>
+            HomeTowns.ForEach(t =>
             {
-                Town town = new Town()
-                {
-                    Name = t
-                };
+                Town town = new Town();
+                town.Name = t;
                 context.Towns.AddOrUpdate(town);
             });
         }

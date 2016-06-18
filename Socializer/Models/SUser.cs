@@ -29,6 +29,8 @@ namespace Socializer.Models
         public SUser()
         {
             Friends = new HashSet<SUser>();
+            Posts = new HashSet<Post>();
+            Notifications = new HashSet<Notification>();
         }
 
         public int? HomeTownID { get; set; }
@@ -45,6 +47,8 @@ namespace Socializer.Models
 
         [Display(Name="Home Town")]
         public virtual Town HomeTown { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<SUser> Friends { get; set; }
 
         public string FullName { get

@@ -27,7 +27,9 @@ namespace Socializer.Controllers
             pvm.User = user;
             pvm.IsLoggedUser = currentLogged == user;
             pvm.IsFriend = currentLogged.Friends.Contains(user);
-
+            pvm.Posts = user.Posts.OrderByDescending(p => p.DatePosted).ToList();
+            pvm.IsPendingFriendRequest = db.FriendRequests.Where(fr => fr.SenderID == currentLogged.Id && fr.ReceiverID == user.Id).Count() > 0;
+            pvm.IsWaitingForResponse = db.FriendRequests.Where(fr => fr.SenderID == user.Id && fr.ReceiverID == currentLogged.Id).Count() > 0; ;
             return View(pvm);
         }
 

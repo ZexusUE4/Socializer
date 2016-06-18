@@ -166,6 +166,13 @@ E:\CSED\Database\Socializer\Socializer\bin\Microsoft.Owin.Security.OAuth.xml
 E:\CSED\Database\Socializer\Socializer\bin\Microsoft.Owin.Security.Google.xml
 E:\CSED\Database\Socializer\Socializer\bin\Microsoft.Owin.Security.Twitter.xml
 E:\CSED\Database\Socializer\Socializer\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\CSED\Database\Socializer\Socializer\bin\System.Net.Http.Formatting.dll
+E:\CSED\Database\Socializer\Socializer\bin\System.Web.Http.dll
+E:\CSED\Database\Socializer\Socializer\bin\System.Web.Http.WebHost.dll
+E:\CSED\Database\Socializer\Socializer\bin\System.Net.Http.Formatting.xml
+E:\CSED\Database\Socializer\Socializer\bin\System.Web.Http.xml
+E:\CSED\Database\Socializer\Socializer\bin\System.Web.Http.WebHost.xml
 E:\CSED\Database\Socializer\Socializer\obj\Debug\Socializer.Migrations.init.resources
 E:\CSED\Database\Socializer\Socializer\obj\Debug\Socializer.csproj.GenerateResource.Cache
-E:\CSED\Database\Socializer\Socializer\obj\Debug\Socializer.Migrations.Adding_MaritalStatuses.resources
+E:\CSED\Database\Socializer\Socializer\obj\Debug\Socializer.Migrations._string.resources
+E:\CSED\Database\Socializer\Socializer\obj\Debug\Socializer.Migrations.ssest.resources

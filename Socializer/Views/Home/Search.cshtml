@@ -1,0 +1,41 @@
+﻿@model List<Socializer.Models.SUser>
+@{
+    ViewBag.Title = "Search Result";
+}
+
+<h2>Search Result</h2>
+<hr />
+
+<div class="row">
+    @foreach (var user in Model)
+    {
+        <div class="col-lg-3">
+            <div class="contact-box center-version">
+
+                <a href="@Url.Action("ShowProfile","SUser",new { id = user.Id }) ">
+
+                    <img alt="image" class="img-circle" src="@user.ProfilePicURL">
+
+
+                    <h3 class="m-b-xs"><strong>@user.FullName</strong></h3>
+                    <address class="m-t-md">
+                        <strong>@user.HomeTown.Name</strong><br>
+                        @user.Email<br>
+                        @user.Gender<br>
+                        <abbr title="Phone">P:</abbr> @user.PhoneNumber
+                    </address>
+
+                </a>
+                @*<div class="contact-box-footer">
+                        <div class="m-t-xs btn-group">
+                            <a class="btn btn-xs btn-white"><i class="fa fa-phone"></i> Call </a>
+                            <a class="btn btn-xs btn-white"><i class="fa fa-envelope"></i> Email</a>
+                            <a class="btn btn-xs btn-white"><i class="fa fa-user-plus"></i> Follow</a>
+                        </div>
+                    </div>*@
+
+            </div>
+        </div>
+    }
+</div>
+

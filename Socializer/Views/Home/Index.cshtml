@@ -1,8 +1,51 @@
-﻿@{
+﻿@model Socializer.Models.ViewModels.HomeViewModel
+@{
     ViewBag.Title = "SocialFeed";
 }
 
 <div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    @using (Html.BeginForm("Create", "Post", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-group-lg", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h4>Post a new status.</h4>
+                        <hr />
+
+                        <div class="form-group">
+                            <div class="col-lg-12">
+                                @Html.TextAreaFor(m => m.Post.Caption, new { @class = "form-control", @style = "max-width:100%;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">
+                                Post Picture
+                            </label>
+                            <div class="col-md-10">
+                                <input title="Upload a Post Picture"
+                                       type="file" name="file" accept=".jpg,.png" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"> 
+                                @Html.CheckBoxFor(m => m.Post.IsPrivate) Private </label>
+                        </div>
+
+                        <div class="form-group">
+                            <div>
+                                <input type="submit" class="btn btn-primary pull-right" value="Post" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
 
         <div class="col-lg-12">
@@ -13,250 +56,48 @@
 
                 </div>
 
-            </div>
 
-            <div class="social-feed-box">
+                @foreach (var post in Model.PostsFromAll)
+                {
+                    <div class="social-feed-box">
 
-                <div class="pull-right social-action dropdown">
-                    <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                        <i class="fa fa-angle-down"></i>
-                    </button>
-                    <ul class="dropdown-menu m-t-xs">
-                        <li><a href="#">Config</a></li>
-                    </ul>
-                </div>
-                <div class="social-avatar">
-                    <a href="" class="pull-left">
-                        <img alt="image" src="~/Images/a1.jpg">
-                    </a>
-                    <div class="media-body">
-                        <a href="#">
-                            Andrew Williams
-                        </a>
-                        <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
-                    </div>
-                </div>
-                <div class="social-body">
-                    <p>
-                        Many desktop publishing packages and web page editors now use Lorem Ipsum as their
-                        default model text, and a search for 'lorem ipsum' will uncover many web sites still
-                        in their infancy. Packages and web page editors now use Lorem Ipsum as their
-                        default model text.
-                    </p>
-
-                    <div class="btn-group">
-                        <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like this!</button>
-                        <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
-                        <button class="btn btn-white btn-xs"><i class="fa fa-share"></i> Share</button>
-                    </div>
-                </div>
-                <div class="social-footer">
-                    <div class="social-comment">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="~/Images/a1.jpg">
-                        </a>
-                        <div class="media-body">
-                            <a href="#">
-                                Andrew Williams
+                        <div class="pull-right social-action dropdown">
+                            <button data-toggle="dropdown" class="dropdown-toggle btn-white">
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                            <ul class="dropdown-menu m-t-xs">
+                                <li><a href="#">Delete</a></li>
+                            </ul>
+                        </div>
+                        <div class="social-avatar">
+                            <a href="" class="pull-left">
+                                <img class="img-circle" alt="image" src="@post.PostOwner.ProfilePicURL" width="50" height="50">
                             </a>
-                            Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words.
-                            <br />
-                            <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26 Like this!</a> -
-                            <small class="text-muted">12.06.2014</small>
+                            <div class="media-body">
+                                <a href="@Url.Action("ShowProfile","SUser",new { id = post.PostOwner.Id })" >
+                                    @post.PostOwner.FullName
+                                </a>
+                                <small class="text-muted">@post.DatePosted</small>
+                            </div>
+                        </div>
+                        <div class="social-body">
+                            <p>
+                                @post.Caption
+                            </p>
+
+                            @if(post.ImageURL != null)
+                            {
+                                <img class="img-responsive" src="@post.ImageURL" width="400" height="400" />
+                            }
+                            <div class="btn-group">
+                                <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like!</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="social-comment">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="~/Images/a2.jpg">
-                        </a>
-                        <div class="media-body">
-                            <a href="#">
-                                Andrew Williams
-                            </a>
-                            Making this the first true generator on the Internet. It uses a dictionary of.
-                            <br />
-                            <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -
-                            <small class="text-muted">10.07.2014</small>
-                        </div>
-                    </div>
-
-                    <div class="social-comment">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="~/Images/a3.jpg">
-                        </a>
-                        <div class="media-body">
-                            <textarea class="form-control" placeholder="Write comment..."></textarea>
-                        </div>
-                    </div>
-
-                </div>
+                }
 
             </div>
-
-            <div class="social-feed-box">
-
-                <div class="pull-right social-action dropdown">
-                    <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                        <i class="fa fa-angle-down"></i>
-                    </button>
-                    <ul class="dropdown-menu m-t-xs">
-                        <li><a href="#">Config</a></li>
-                    </ul>
-                </div>
-                <div class="social-avatar">
-                    <a href="" class="pull-left">
-                        <img alt="image" src="~/Images/a6.jpg">
-                    </a>
-                    <div class="media-body">
-                        <a href="#">
-                            Andrew Williams
-                        </a>
-                        <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
-                    </div>
-                </div>
-                <div class="social-body">
-                    <p>
-                        Many desktop publishing packages and web page editors now use Lorem Ipsum as their
-                        default model text, and a search for 'lorem ipsum' will uncover many web sites still
-                        in their infancy. Packages and web page editors now use Lorem Ipsum as their
-                        default model text.
-                    </p>
-                    <p>
-                        Lorem Ipsum as their
-                        default model text, and a search for 'lorem ipsum' will uncover many web sites still
-                        in their infancy. Packages and web page editors now use Lorem Ipsum as their
-                        default model text.
-                    </p>
-                    <img src="~/Images/gallery/11.jpg" class="img-responsive">
-                    <div class="btn-group">
-                        <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like this!</button>
-                        <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
-                        <button class="btn btn-white btn-xs"><i class="fa fa-share"></i> Share</button>
-                    </div>
-                </div>
-                <div class="social-footer">
-                    <div class="social-comment">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="~/Images/a1.jpg">
-                        </a>
-                        <div class="media-body">
-                            <a href="#">
-                                Andrew Williams
-                            </a>
-                            Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words.
-                            <br />
-                            <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 26 Like this!</a> -
-                            <small class="text-muted">12.06.2014</small>
-                        </div>
-                    </div>
-
-                    <div class="social-comment">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="~/Images/a2.jpg">
-                        </a>
-                        <div class="media-body">
-                            <a href="#">
-                                Andrew Williams
-                            </a>
-                            Making this the first true generator on the Internet. It uses a dictionary of.
-                            <br />
-                            <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -
-                            <small class="text-muted">10.07.2014</small>
-                        </div>
-                    </div>
-
-                    <div class="social-comment">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="~/Images/a8.jpg">
-                        </a>
-                        <div class="media-body">
-                            <a href="#">
-                                Andrew Williams
-                            </a>
-                            Making this the first true generator on the Internet. It uses a dictionary of.
-                            <br />
-                            <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -
-                            <small class="text-muted">10.07.2014</small>
-                        </div>
-                    </div>
-
-                    <div class="social-comment">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="~/Images/a3.jpg">
-                        </a>
-                        <div class="media-body">
-                            <textarea class="form-control" placeholder="Write comment..."></textarea>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="social-feed-box">
-
-                <div class="pull-right social-action dropdown">
-                    <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                        <i class="fa fa-angle-down"></i>
-                    </button>
-                    <ul class="dropdown-menu m-t-xs">
-                        <li><a href="#">Config</a></li>
-                    </ul>
-                </div>
-                <div class="social-avatar">
-                    <a href="" class="pull-left">
-                        <img alt="image" src="~/Images/a4.jpg">
-                    </a>
-                    <div class="media-body">
-                        <a href="#">
-                            Andrew Williams
-                        </a>
-                        <small class="text-muted">Today 4:21 pm - 12.06.2014</small>
-                    </div>
-                </div>
-                <div class="social-body">
-                    <p>
-                        Packages and web page editors now use Lorem Ipsum as their
-                        default model text. Page editors now use Lorem Ipsum as their
-                        default model text.
-                    </p>
-                    <div class="btn-group">
-                        <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like this!</button>
-                        <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> Comment</button>
-                        <button class="btn btn-white btn-xs"><i class="fa fa-share"></i> Share</button>
-                    </div>
-                </div>
-                <div class="social-footer">
-
-
-                    <div class="social-comment">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="~/Images/a8.jpg">
-                        </a>
-                        <div class="media-body">
-                            <a href="#">
-                                Andrew Williams
-                            </a>
-                            Making this the first true generator on the Internet. It uses a dictionary of.
-                            <br />
-                            <a href="#" class="small"><i class="fa fa-thumbs-up"></i> 11 Like this!</a> -
-                            <small class="text-muted">10.07.2014</small>
-                        </div>
-                    </div>
-
-                    <div class="social-comment">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="~/Images/a3.jpg">
-                        </a>
-                        <div class="media-body">
-                            <textarea class="form-control" placeholder="Write comment..."></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
- 
     </div>
 </div>

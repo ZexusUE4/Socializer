@@ -24,6 +24,7 @@ namespace Socializer.Models
         public NotificationStatuses Status { get; set; }
         public NotificiationTypes Type { get; set; }
         public DateTime DateIssued { get; set; }
+        public bool IsSeen { get; set; }
 
         public virtual SUser Sender { get; set; }
         public virtual SUser Reciever { get; set; }
