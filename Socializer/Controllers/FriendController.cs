@@ -21,31 +21,20 @@ namespace Socializer.Controllers
             return View(currentLogged.Friends.ToList());
         }
 
-        public ActionResult AcceptFriendRequest(string id1,string id2)
+        public ActionResult Unfriend(string id)
         {
-            FriendRequest fr = db.FriendRequests.FirstOrDefault(f => f.ReceiverID == id1 && f.SenderID == id2);
+            SUser currentLogged = db.Users.Find(User.Identity.GetUserId());
+            SUser other = db.Users.Find(id);
 
-            db.FriendRequests.Remove(fr);
-            SUser logged = db.Users.Find(id1);
-            SUser other = db.Users.Find(id2);
+            if (other == null)
+                return HttpNotFound();
 
-            logged.Friends.Add(other);
-            other.Friends.Add(logged);
+            currentLogged.Friends.Remove(other);
+            other.Friends.Remove(currentLogged);
 
             db.SaveChanges();
 
-            return RedirectToAction("ShowProfile", "SUser", new { id = id2 });
-        }
-
-        public ActionResult RejectFriendRequest(string id1, string id2)
-        {
-            FriendRequest fr = db.FriendRequests.FirstOrDefault(f => f.ReceiverID == id1 && f.SenderID == id2);
-
-            db.FriendRequests.Remove(fr);
-
-            db.SaveChanges();
-
-            return RedirectToAction("ShowProfile", "SUser", new { id = id2 });
+            return RedirectToAction("ShowProfile", "SUser", new { id = other.Id });
         }
     }
 }

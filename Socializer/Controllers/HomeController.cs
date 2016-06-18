@@ -56,7 +56,7 @@ namespace Socializer.Controllers
         public ActionResult Search(string query)
         {
             HashSet<SUser> UserSearch = new HashSet<SUser>(db.Users.Where(u => u.Email == query || u.FirstName == query
-                                              || u.LastName == query || u.PhoneNumber == query).ToList());
+                                              || u.LastName == query || u.PhoneNumber == query || u.HomeTown.Name == query).ToList());
 
             List<Post> posts = db.Posts.Where(p => p.Caption.Contains(query)).ToList();
 

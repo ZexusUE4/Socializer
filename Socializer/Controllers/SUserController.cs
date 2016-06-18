@@ -71,11 +71,39 @@ namespace Socializer.Controllers
                 var path = Server.MapPath("/Images/ProfilePics/") + currentLogged.Id + ".jpg";
                 file.SaveAs(path);
                 currentLogged.ProfilePicURL = "/Images/ProfilePics/" + currentLogged.Id + ".jpg";
+
+                Post p = new Post();
+                p.Caption = currentLogged.FullName + " changed their profile picture !";
+                p.DatePosted = DateTime.Now;
+                p.IsPrivate = true;
+                p.PostOwner = currentLogged;
+
+                currentLogged.Posts.Add(p);
+                db.SaveChanges();
+
+                path = Server.MapPath("/Images/PostPics/") + p.ID + ".jpg";
+                file.SaveAs(path);
+                p.ImageURL = "/Images/PostPics/" + p.ID + ".jpg";
             }
 
             db.SaveChanges();
-
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult RemoveProfilePic()
+        {
+            SUser currentLogged = db.Users.Find(User.Identity.GetUserId());
+
+            if (currentLogged.Gender == Genders.Female)
+            {
+                currentLogged.ProfilePicURL = "/Images/woman.jpg";
+            }
+            else
+                currentLogged.ProfilePicURL = "/Images/man.png";
+
+            db.SaveChanges();
+
+            return RedirectToAction("ShowProfile", new { id = currentLogged.Id });
         }
     }
 }

@@ -174,7 +174,10 @@ namespace Socializer.Controllers
                 }
                 else
                 {
-                    //Default PP
+                    if (user.Gender == Genders.Male)
+                        user.ProfilePicURL = "/Images/man.png";
+                    else
+                        user.ProfilePicURL = "/Images/woman.jpg";
                 }
 
                 var result = await UserManager.CreateAsync(user, model.Password);

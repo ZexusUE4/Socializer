@@ -1,0 +1,40 @@
+﻿@model List<Socializer.Models.FriendRequest>
+@{
+    ViewBag.Title = "Friend Requests";
+}
+
+<h2>Friend Requests</h2>
+<hr />
+
+<div class="row">
+    @foreach (var fr in Model)
+    {
+        <div class="col-lg-3">
+            <div class="contact-box center-version">
+
+                <a href="@Url.Action("ShowProfile","SUser",new { id = fr.SenderID }) ">
+
+                    <img alt="image" class="img-circle" src="@fr.Sender.ProfilePicURL">
+
+
+                    <h3 class="m-b-xs"><strong>@fr.Sender.FullName</strong></h3>
+                    <address class="m-t-md">
+                        <strong>@fr.Sender.HomeTown.Name</strong><br>
+                        @fr.Sender.Email<br>
+                        @fr.Sender.Gender<br>
+                        <abbr title="Phone">P:</abbr> @fr.Sender.PhoneNumber
+                    </address>
+
+                </a>
+                <div class="contact-box-footer">
+                        <div class="m-t-xs btn-group">
+                            <a class="btn btn-default" href="@Url.Action("Reject", "FriendRequest",new { id = fr.ID })">  Reject</a>
+                            <a class="btn btn-primary" href="@Url.Action("Accept","FriendRequest",new { id = fr.ID })" > Accept</a>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+

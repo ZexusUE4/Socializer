@@ -55,3 +55,15 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+@section Scripts {
+    <script type="text/javascript">
+        var formatSmileys = function (text) {
+            text = text.Replace(":)", "<img src='/Images/Smileys/happy.png' alt='Happy!' height='20' width='20' />");
+            text = text.Replace(":(", "<img src='/Images/Smileys/sad.png' alt='Sad...' height='20' width='20' />");
+
+            return text;
+        }
+    </script>
+
+}

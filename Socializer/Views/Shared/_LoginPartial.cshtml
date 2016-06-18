@@ -10,6 +10,9 @@
 
         ApplicationUserManager userManager = Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
         SUser currentUser = userManager.FindById(User.Identity.GetUserId());
+        Socializer.DAL.SocializerContext db = new Socializer.DAL.SocializerContext();
+        List<FriendRequest> fr = db.FriendRequests.Where(f => f.ReceiverID == currentUser.Id).ToList();
+        int NotSeenCount = fr.Count(f => f.IsSeen == false);
 
     <ul class="nav navbar-top-links navbar-right">
         <li>
@@ -20,40 +23,28 @@
         </li>
         <li class="dropdown">
             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <img src="~/Images/Friend.png" height="25" width="25">  <span class="label label-primary">8</span>
+                <img src="~/Images/Friend.png" height="25" width="25">  <span class="label label-primary">@NotSeenCount</span>
             </a>
             <ul class="dropdown-menu dropdown-alerts">
-                <li>
-                    <a href="#">
-                        <div>
-                            <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                            <span class="pull-right text-muted small">4 minutes ago</span>
+                @for(var i = 0;i < Math.Min(fr.Count,5);i++)
+                {
+                    <li>
+                        <div class="dropdown-messages-box">
+                            <a href="#" class="pull-left">
+                                <img alt="image" class="img-circle" src="@fr[i].Sender.ProfilePicURL" width="50" height="50">
+                            </a>
+                            <div class="media-body ">
+                                <strong>@fr[i].Sender.FullName</strong> sent you a friend request.
+                            </div>
                         </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                            <span class="pull-right text-muted small">12 minutes ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                            <span class="pull-right text-muted small">4 minutes ago</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="divider"></li>
+                    </li>
+                }
+                
+
                 <li>
                     <div class="text-center link-block">
-                        <a href="#">
-                            <strong>See All Alerts</strong>
+                        <a href="@Url.Action("FriendRequestList","FriendRequest")">
+                            <strong>See All Friend Requests</strong>
                             <i class="fa fa-angle-right"></i>
                         </a>
                     </div>

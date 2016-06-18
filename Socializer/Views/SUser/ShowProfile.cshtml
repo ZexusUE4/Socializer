@@ -87,6 +87,9 @@
                                     <div class="col-md-6">
                                         <button id="Edit" type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> Edit Profile </button>
                                     </div>
+                                    <div class="col-md-6">
+                                        <button id="RemoveProfilePic" type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> Remove Profile Picture </button>
+                                    </div>
                                 }
                                 @if(Model.IsPendingFriendRequest)
                                 {
@@ -111,6 +114,12 @@
                                 {
                                     <div class="col-md-6">
                                         <button id="AddFriend" type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-coffee"></i> Add Friend </button>
+                                    </div>
+                                }
+                                else if (Model.IsFriend)
+                                {
+                                    <div class="col-md-6">
+                                        <button id="Unfriend" type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> Unfriend</button>
                                     </div>
                                 }
                             </div>
@@ -139,11 +148,14 @@
 
                             <div class="pull-right social-action dropdown">
                                 <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                                    <i class="fa fa-angle-down"></i>
+                                    <img src="~/Images/gear.png" height="15" width="15" />
                                 </button>
-                                <ul class="dropdown-menu m-t-xs">
-                                    <li><a href="#">Delete</a></li>
-                                </ul>
+                                @if (post.PostOwnerID == User.Identity.GetUserId())
+                                {
+                                    <ul class="dropdown-menu m-t-xs">
+                                        <li><a href="@Url.Action("Delete","Post", new { id = post.ID })">Delete</a></li>
+                                    </ul>
+                                }
                             </div>
                             <div class="social-avatar">
                                 <a href="" class="pull-left">
@@ -166,7 +178,15 @@
                                     <img class="img-responsive" src="@post.ImageURL" width="400" height="400" />
                                 }
                                 <div class="btn-group">
-                                    <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like!</button>
+                                    @if (post.Likes.Where(l => l.UserID == User.Identity.GetUserId()).Count() == 0)
+                                    {
+                                        <button class="like btn btn-white btn-xs" data-postId="@post.ID">Like</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="like btn btn-white btn-xs" data-postId="@post.ID">Unlike</button>
+                                    }
+
                                 </div>
                             </div>
                         </div>
@@ -192,17 +212,39 @@
             });
 
             $("#Accept").click(function () {
-                window.location = "@Url.Action("AcceptFriendRequest", "Friend")" + "?id1=" + "@User.Identity.GetUserId()" + "&id2=" + "@Model.User.Id";
+                window.location = "@Url.Action("AcceptFriendRequest", "FriendRequest")" + "?id1=" + "@User.Identity.GetUserId()" + "&id2=" + "@Model.User.Id";
             });
 
             $("#Reject").click(function () {
-                window.location = "@Url.Action("RejectFriendRequest", "Friend")" + "?id1=" + "@User.Identity.GetUserId()" + "&id2=" + "@Model.User.Id";
+                window.location = "@Url.Action("RejectFriendRequest", "FriendRequest")" + "?id1=" + "@User.Identity.GetUserId()" + "&id2=" + "@Model.User.Id";
+            });
+
+            $("#RemoveProfilePic").click(function () {
+                window.location = "@Url.Action("RemoveProfilePic", "SUser")" + "?id=" + "@User.Identity.GetUserId()";
+            });
+
+            $("#Unfriend").click(function () {
+                window.location = "@Url.Action("Unfriend", "Friend")" + "?id=" + "@Model.User.Id";
             });
 
             $('#AddFriend').click(function () {
                 $.get("/api" + "@Url.Action("Get", "FriendRequestAPI")" + "?id1=" + "@User.Identity.GetUserId()" + "&id2=" + "@Model.User.Id", function (data) {
                     $('#AddFriend').attr("disabled", true);
                     $('#AddFriend').html("Friend Request Sent !");
+                });
+            });
+
+
+            $('.like').click(function () {
+                var but = this;
+                $.get("/api" + "@Url.Action("Like", "LikeAPI")" + "?postID=" + $(but).attr('data-postId') + "&userID=" + "@User.Identity.GetUserId()" + "&like=" + $(but).html(), function (data) {
+                    if($(but).html() == "Like")
+                        $(but).html('Unlike');
+                    else
+                        $(but).html('Like');
+
+                    $('#' + $(but).attr('data-postId')).html(data + " people like this !");
+
                 });
             });
         });

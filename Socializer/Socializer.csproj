@@ -211,7 +211,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FriendRequestAPIController.cs" />
     <Compile Include="Controllers\FriendController.cs" />
+    <Compile Include="Controllers\FriendRequestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LikeAPIController.cs" />
+    <Compile Include="Controllers\LikeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\SUserController.cs" />
@@ -239,6 +242,7 @@
     <Compile Include="Models\Town.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\SUser.cs" />
+    <Compile Include="Models\ViewModels\Emoticons.cs" />
     <Compile Include="Models\ViewModels\HomeViewModel.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\ProfileViewModel.cs" />
@@ -325,6 +329,8 @@
     <Content Include="Views\Shared\_TopNavbar.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Friend\FriendList.cshtml" />
+    <Content Include="Views\FriendRequest\FriendRequestList.cshtml" />
+    <Content Include="Views\Like\Likers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

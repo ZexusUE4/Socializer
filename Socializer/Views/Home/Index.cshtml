@@ -1,4 +1,7 @@
 ﻿@model Socializer.Models.ViewModels.HomeViewModel
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin;
+
 @{
     ViewBag.Title = "SocialFeed";
 }
@@ -63,11 +66,15 @@
 
                         <div class="pull-right social-action dropdown">
                             <button data-toggle="dropdown" class="dropdown-toggle btn-white">
-                                <i class="fa fa-angle-down"></i>
+                                <img src="~/Images/gear.png" height="15" width="15" />
                             </button>
-                            <ul class="dropdown-menu m-t-xs">
-                                <li><a href="#">Delete</a></li>
-                            </ul>
+                            @if (post.PostOwnerID == User.Identity.GetUserId())
+                            {
+                                <ul class="dropdown-menu m-t-xs">
+                                    <li><a href="@Url.Action("Delete","Post", new { id = post.ID })">Delete</a></li>
+                                </ul>
+                            }
+
                         </div>
                         <div class="social-avatar">
                             <a href="" class="pull-left">
@@ -78,11 +85,19 @@
                                     @post.PostOwner.FullName
                                 </a>
                                 <small class="text-muted">@post.DatePosted</small>
+                                @if (post.IsPrivate)
+                                {
+                                    <text> Private</text>
+                                }
+                                else
+                                {
+                                    <text> Public</text>
+}
                             </div>
                         </div>
                         <div class="social-body">
-                            <p>
-                                @post.Caption
+                            <p id="caption">
+                                @Html.Raw(Socializer.Models.ViewModels.Emoticons.formatString(post.Caption))
                             </p>
 
                             @if(post.ImageURL != null)
@@ -90,8 +105,20 @@
                                 <img class="img-responsive" src="@post.ImageURL" width="400" height="400" />
                             }
                             <div class="btn-group">
-                                <button class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like!</button>
+                                @if (post.Likes.Where(l => l.UserID == User.Identity.GetUserId()).Count() == 0)
+                                {
+                                    <button class="like btn btn-white btn-xs" data-postId="@post.ID">Like</button>
+                                }
+                                else
+                                {
+                                    <button class="like btn btn-white btn-xs" data-postId="@post.ID">Unlike</button>
+                                }
+                                
                             </div>
+
+                            <a href="@Url.Action("Likers","Like",new { postID = post.ID })" >
+                                <small id="@post.ID" class="text-muted">@post.Likes.Count people like this !</small>
+                            </a>
                         </div>
                     </div>
 
@@ -101,3 +128,26 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('.like').click(function () {
+                var but = this;
+                $.get("/api" + "@Url.Action("Like", "LikeAPI")" + "?postID=" + $(but).attr('data-postId') + "&userID=" + "@User.Identity.GetUserId()" + "&like=" + $(but).html(), function (data) {
+                    if($(but).html() == "Like")
+                        $(but).html('Unlike');
+                    else
+                        $(but).html('Like');
+                    
+                    $('#' + $(but).attr('data-postId')).html(data + " people like this !");
+
+                });
+            });
+        });
+
+    </script>
+}
+
