@@ -1,0 +1,40 @@
+﻿@model List<Socializer.Models.Notification>
+@{
+    ViewBag.Title = "Notification List";
+}
+
+<div class="ibox-content inspinia-timeline">
+
+    @foreach (var notif in Model)
+    {
+        <div class="timeline-item">
+            <div class="row">
+                <a href="@Url.Action("ShowProfile","SUser",new { id = notif.SenderID })" class="pull-left" >
+                    <img alt="image" class="img-circle" src="@notif.Sender.ProfilePicURL" height ="50" width="50">
+                </a>
+                <div class="col-xs-3 date">
+                    @notif.DateIssued
+                </div>
+                <div class="col-xs-7 content no-top-border">
+                    <p class="m-b-xs"><strong>@notif.Type</strong></p>
+
+                    <p>
+                        <strong>@notif.Sender.FullName</strong>
+                        @if (notif.Type == Socializer.Models.NotificiationTypes.FriendRequest)
+                        {
+                            <text> sent you a friend request </text>
+                        }
+                        else
+                        {
+                            <text> liked your post "@notif.Post.Caption" </text>
+                        }. <br>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    }
+
+    
+</div>
+

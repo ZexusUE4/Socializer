@@ -225,6 +225,7 @@
     <Compile Include="Controllers\LikeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotificationAPIController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\SUserController.cs" />
     <Compile Include="DAL\SocializerContext.cs" />
@@ -336,6 +337,7 @@
     <Content Include="Views\Friend\FriendList.cshtml" />
     <Content Include="Views\FriendRequest\FriendRequestList.cshtml" />
     <Content Include="Views\Like\Likers.cshtml" />
+    <Content Include="Views\Notification\NotificationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
