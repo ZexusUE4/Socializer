@@ -166,11 +166,19 @@
                                         @post.PostOwner.FullName
                                     </a>
                                     <small class="text-muted">@post.DatePosted</small>
+                                    @if (post.IsPrivate)
+                                    {
+                                        <text> Private</text>
+                                    }
+                                    else
+                                    {
+                                        <text> Public</text>
+                                    }
                                 </div>
                             </div>
                             <div class="social-body">
                                 <p>
-                                    @post.Caption
+                                    @Html.Raw(Socializer.Models.ViewModels.Emoticons.formatString(post.Caption))
                                 </p>
 
                                 @if (post.ImageURL != null)
@@ -188,6 +196,10 @@
                                     }
 
                                 </div>
+
+                                <a href="@Url.Action("Likers","Like",new { postID = post.ID })">
+                                    <small id="@post.ID" class="text-muted">@post.Likes.Count people like this !</small>
+                                </a>
                             </div>
                         </div>
 

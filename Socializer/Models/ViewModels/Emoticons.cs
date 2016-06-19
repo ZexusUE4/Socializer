@@ -17,5 +17,5 @@ namespace Socializer.Models.ViewModels
 
             return text;
         }
-}
+    }
 }

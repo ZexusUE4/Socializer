@@ -172,7 +172,9 @@ E:\CSED\Database\Socializer\Socializer\bin\System.Web.Http.WebHost.dll
 E:\CSED\Database\Socializer\Socializer\bin\System.Net.Http.Formatting.xml
 E:\CSED\Database\Socializer\Socializer\bin\System.Web.Http.xml
 E:\CSED\Database\Socializer\Socializer\bin\System.Web.Http.WebHost.xml
+E:\CSED\Database\Socializer\Socializer\bin\Microsoft.AspNet.SignalR.Core.dll
+E:\CSED\Database\Socializer\Socializer\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+E:\CSED\Database\Socializer\Socializer\bin\Microsoft.AspNet.SignalR.Core.xml
+E:\CSED\Database\Socializer\Socializer\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
 E:\CSED\Database\Socializer\Socializer\obj\Debug\Socializer.Migrations.init.resources
 E:\CSED\Database\Socializer\Socializer\obj\Debug\Socializer.csproj.GenerateResource.Cache
-E:\CSED\Database\Socializer\Socializer\obj\Debug\Socializer.Migrations._string.resources
-E:\CSED\Database\Socializer\Socializer\obj\Debug\Socializer.Migrations.ssest.resources

@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/plugins/toastrStyles")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -52,18 +53,41 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/plugins/toastr")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "progressBar": true,
+                "positionClass": "toast-bottom-left",
+                "onclick": null,
+                "showDuration": "400",
+                "hideDuration": "1000",
+                "timeOut": "7000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            var checkForNotif = function()
+            {
+                $.get("/api" + "@Url.Action("Get", "NotificationAPI")" + "?userId=" + "@User.Identity.GetUserId()", function (data) {
+                    console.log("hellooo");
+                    if (data != "Not Found") {
+                        toastr.info(data, "Notification");
+                    }
+                });
+            }
+
+            setInterval(checkForNotif, 1000);
+
+        });
+
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
-
-@section Scripts {
-    <script type="text/javascript">
-        var formatSmileys = function (text) {
-            text = text.Replace(":)", "<img src='/Images/Smileys/happy.png' alt='Happy!' height='20' width='20' />");
-            text = text.Replace(":(", "<img src='/Images/Smileys/sad.png' alt='Sad...' height='20' width='20' />");
-
-            return text;
-        }
-    </script>
-
-}

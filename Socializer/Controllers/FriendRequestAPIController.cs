@@ -22,6 +22,18 @@ namespace Socializer.Controllers
             fr.ReceiverID = id2;
 
             db.FriendRequests.Add(fr);
+
+            Notification notif = new Notification()
+            {
+                DateIssued = DateTime.Now,
+                IsSeen = false,
+                Type = NotificiationTypes.FriendRequest,
+                SenderID = id1,
+                RecieverID = id2,
+            };
+
+            db.Notifications.Add(notif);
+
             db.SaveChanges();
 
             return Ok();

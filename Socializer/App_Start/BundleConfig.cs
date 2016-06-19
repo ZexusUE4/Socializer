@@ -38,6 +38,14 @@ namespace Socializer
             bundles.Add(new ScriptBundle("~/plugins/dataPicker").Include(
                       "~/Scripts/plugins/datapicker/bootstrap-datepicker.js"));
 
+            // toastr notification 
+            bundles.Add(new ScriptBundle("~/plugins/toastr").Include(
+                      "~/Scripts/plugins/toastr/toastr.min.js"));
+
+            // toastr notification styles
+            bundles.Add(new StyleBundle("~/plugins/toastrStyles").Include(
+                      "~/Content/plugins/toastr/toastr.min.css"));
+
         }
     }
 }

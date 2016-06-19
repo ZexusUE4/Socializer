@@ -24,6 +24,18 @@ namespace Socializer.Controllers
                     UserID = userID
                 });
 
+                Notification notif = new Notification()
+                {
+                    DateIssued = DateTime.Now,
+                    IsSeen = false,
+                    Post = p,
+                    Sender = db.Users.Find(userID),
+                    Reciever = p.PostOwner,
+                    Type = NotificiationTypes.Like
+                };
+
+                db.Notifications.Add(notif);
+
                 db.SaveChanges();
 
                 return Ok(p.Likes.Count);

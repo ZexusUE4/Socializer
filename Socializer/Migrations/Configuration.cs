@@ -16,7 +16,7 @@ namespace Socializer.Migrations
 
         protected override void Seed(Socializer.DAL.SocializerContext context)
         {
-            return;
+            //return;
             List<string> HomeTowns = new List<string>()
             {
                 "Cairo","Alexandria","Tanta","Luxor","Sharm El Sheikh","Hurghada", "Damanhour",

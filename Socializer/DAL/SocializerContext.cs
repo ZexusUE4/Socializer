@@ -33,6 +33,8 @@ namespace Socializer.DAL
 
             //Many to many with users
             modelBuilder.Entity<SUser>().HasMany<SUser>(m => m.Friends).WithMany();
+            modelBuilder.Entity<Notification>().HasOptional(m => m.Reciever).WithMany(m => m.Notifications).HasForeignKey(m => m.RecieverID);
+            modelBuilder.Entity<Notification>().HasOptional(m => m.Sender).WithMany().HasForeignKey(m => m.SenderID);
         }
 
         public static SocializerContext Create()
